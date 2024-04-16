@@ -32,7 +32,6 @@ FUZZ_THRESHOLD = 70
 
 # Google API authentication
 class AttendanceForm:
-
     def __init__(self, form_id=FORM_ID) -> None:
         self.api_service = self.get_forum_API()
         self.form_id = form_id
@@ -118,6 +117,7 @@ class CanvasCourse:
         return course
 
     def canvas_upload(self, df: pd.DataFrame, ass_id: int):
+        print("Generating user list! This might take a while...")
         users = self.course.get_users(enrollment_type=["student"])
         uids = pd.DataFrame.from_records(list(map(lambda x: x.get_profile(), users)))
 
@@ -194,6 +194,7 @@ def parsing_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
+# TODO: Check for existing grades
 def main():
     args = parsing_args()
     keyphrase = args.keyphrase.strip().lower()
